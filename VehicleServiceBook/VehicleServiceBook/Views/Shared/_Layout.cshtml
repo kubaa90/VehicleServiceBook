@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,10 +25,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Menu
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -49,13 +52,39 @@
                     </ul>
                 </div>
                 <div class="navbar-collapse collapse d-lg-inline-flex flex-lg-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 nounderline">
-                        <li class="nav-item">
-                            <a class="nav-link color-header" asp-area="" asp-controller="Account" asp-action="Register">Dodaj użytkownika</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link color-header" asp-area="" asp-controller="Account" asp-action="Login">Logowanie</a>
-                        </li>
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="" asp-action="" title="Manage">Witaj @User.Claims.Where(x => x.Type == "FirstName").Select(x => x.Value).FirstOrDefault().ToString()!</a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Account" asp-action="Index">
+                                        <span>Użytkownicy</span>
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Account" asp-action="Register">
+                                        <span>Dodaj użytkownika</span>
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            }
+                            <li class="nav-item">
+                                <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-controller="Account" asp-action="Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

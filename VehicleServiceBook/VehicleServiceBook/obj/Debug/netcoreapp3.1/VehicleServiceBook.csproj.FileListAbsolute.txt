@@ -153,3 +153,6 @@ C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleS
 C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\VehicleServiceBook.csproj.CoreCompileInputs.cache
 C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\VehicleServiceBook.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\Register.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\Edit.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Account\Index.cshtml.g.cs
