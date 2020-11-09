@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using VehicleServiceBook.Models;
 
 namespace VehicleServiceBook.ViewModels
 {
@@ -21,7 +22,11 @@ namespace VehicleServiceBook.ViewModels
         [Required]
         [MaxLength(10)]
         public string PlateNumber { get; set; }
-        public IEnumerable<SelectListItem> ProducersList { get; set; }
+        [Required]
+        public int ProducerId { get; set; }
+
+        [ForeignKey("PlanID")]
+        public ProducerModel Producer { get; set; }
         [Required]
         public DateTime RegistrationDate { get; set; }
     }

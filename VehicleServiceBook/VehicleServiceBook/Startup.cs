@@ -57,6 +57,7 @@ namespace VehicleServiceBook
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<VehicleServiceContext>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IProducerService, ProducerService>();
             services.AddControllersWithViews();
         }
 

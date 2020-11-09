@@ -1,8 +1,8 @@
-﻿@model VehicleServiceBook.ViewModels.VehicleCreateViewModel
+﻿@model VehicleServiceBook.ViewModels.VehicleEditViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var title = "Create Vehicle";
+    var title = "Edytuj pojazd";
 }
 
 
@@ -60,7 +60,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Dodaj</button>
+                    <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Edytuj</button>
                 </div>
                 <div class="col">
                     <a asp-action="Index" class="btn btn-success form-control">Powrót do listy</a>
@@ -94,6 +94,4 @@
     </script>
 
 }
-
-
 
