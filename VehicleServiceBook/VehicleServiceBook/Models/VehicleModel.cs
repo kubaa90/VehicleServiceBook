@@ -9,10 +9,6 @@ namespace VehicleServiceBook.Models
 {
     public class VehicleModel
     {
-        public VehicleModel()
-        {
-            RegistrationDateString = RegistrationDate.ToString("d");
-        }
         [Key]
         public int Id { get; set; }
         [Display(Name = "Numer Pojazdu")]
@@ -34,6 +30,6 @@ namespace VehicleServiceBook.Models
         [Required]
         public DateTime RegistrationDate { get; set; }
 
-        [NotMapped] public string RegistrationDateString { get; set; }
+        public string RegistrationDateString { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using VehicleServiceBook.Context;
 using VehicleServiceBook.Models;
 using VehicleServiceBook.Services.Interfaces;
@@ -29,7 +30,7 @@ namespace VehicleServiceBook.Services
 
         public IList<VehicleModel> GetAll()
         {
-            return _context.Vehicles.ToList();
+            return _context.Vehicles.Include(d => d.Producer).ToList();
         }
 
         public bool Update(VehicleModel vehicle)
