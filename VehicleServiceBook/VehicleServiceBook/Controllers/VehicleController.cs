@@ -13,6 +13,7 @@ using VehicleServiceBook.ViewModels;
 
 namespace VehicleServiceBook.Controllers
 {
+    [Authorize(Roles = "Admin, Obsługa")]
     public class VehicleController : Controller
     {
         private readonly IVehicleService _vehicleService;

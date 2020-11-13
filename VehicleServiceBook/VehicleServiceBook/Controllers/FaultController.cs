@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,17 +24,20 @@ namespace VehicleServiceBook.Controllers
             _vehicleService = vehicleService;
             _userManager = userManager;
         }
+        [Authorize(Roles = "Admin, Obsługa")]
         public IActionResult Index()
         {
             return View();
         }
         [HttpGet]
+        [Authorize(Roles = "Kierowca, Admin, Obsługa")]
         public IActionResult Create()
         {
             ViewData["VehicleModelID"] = new SelectList(_vehicleService.GetAll(), "Id", "Number").OrderBy(x => x.Text);
             return View();
         }
         [HttpPost]
+        [Authorize(Roles = "Kierowca, Admin, Obsługa")]
         public IActionResult Create(FaultCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -62,7 +66,8 @@ namespace VehicleServiceBook.Controllers
             }
         }
 
-        [HttpGet] 
+        [HttpGet]
+        [Authorize(Roles = "Admin, Obsługa")]
         public IActionResult Details(int id)
         {
             var faultDetails = _faultService.Get(id);
@@ -76,6 +81,7 @@ namespace VehicleServiceBook.Controllers
             return View(faultDetailsViewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "Kierowca, Admin, Obsługa")]
         public IActionResult Confirm(int id)
         {
             var faultConfirm = _faultService.Get(id);
@@ -89,6 +95,7 @@ namespace VehicleServiceBook.Controllers
             return View(faultConfirmViewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "Kierowca, Admin, Obsługa")]
         public IActionResult Edit(int id)
         {
             var faultToEdit = _faultService.Get(id);
@@ -102,6 +109,7 @@ namespace VehicleServiceBook.Controllers
             return View(faultEditViewModel);
         }
         [HttpPost]
+        [Authorize(Roles = "Kierowca, Admin, Obsługa")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(FaultEditViewModel viewModel)
         {
@@ -127,12 +135,14 @@ namespace VehicleServiceBook.Controllers
         }
         #region API CALLS
         [HttpGet]
+        [Authorize(Roles = "Admin, Obsługa")]
         public IActionResult List()
         {
             var allObj = _faultService.GetAll();
             return Json(new { data = allObj });
         }
         [HttpDelete]
+        [Authorize(Roles = "Admin, Obsługa")]
         public IActionResult Delete(int id)
         {
             var objFromDb = _faultService.Get(id);
