@@ -1,0 +1,99 @@
+﻿@model VehicleServiceBook.ViewModels.VehicleCreateViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Create Vehicle";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Number"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="VIN"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="VIN" class="form-control" />
+                    <span asp-validation-for="VIN" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="PlateNumber"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="PlateNumber" class="form-control" />
+                    <span asp-validation-for="PlateNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="RegistrationDate"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="RegistrationDate" class="form-control" />
+                    <span asp-validation-for="RegistrationDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="choosePlan" class="col-sm-2 label-size col-form-label">
+                    Producent
+                </label>
+                <div class="col-sm-3">
+                    <select asp-for="@Model.ProducerId" class="form-control" asp-items="ViewBag.ProducerModelID">
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Dodaj</button>
+                </div>
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-success form-control">Powrót do listy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.tiny.cloud/1/n94ifuzvl80pchikopiwgz2esrw8n28dwcywvpejlqrregfp/tinymce/5/tinymce.min.js"></script>
+
+    <script>
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'lists',
+            menubar: 'file edit format'
+        });
+
+
+        function validateInput() {
+            if (document.getElementById("uploadBox").value == "") {
+                swal("Error", "Please select an image", "error");
+                return false;
+            }
+            return true;
+        };
+
+    </script>
+
+}
+
+
+

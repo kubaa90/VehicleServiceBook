@@ -1,0 +1,67 @@
+﻿@model VehicleServiceBook.ViewModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Edycja użytkownika";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edycja użytkownika @ViewBag.Username</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="ID" class="form-control" hidden />
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" placeholder="Podaj imię użytkownika" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Podaj imię użytkownika" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" placeholder="Podaj nazwisko użytkownika" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" placeholder="Podaj email użytkownika" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Podaj telefon użytkownika" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Role" class="control-label"></label>
+                @Html.DropDownListFor(x => x.Role, new List<SelectListItem>
+                { new SelectListItem { Text = "Admin", Value = "Admin", Selected=true},
+                    new SelectListItem { Text = "Obsługa", Value = "User"},
+                    new SelectListItem { Text = "Kierowca", Value = "Driver"}
+                }, "Wybierz uprawnienia", new { @class = "form-control" })
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Edytuj użytkownika" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
