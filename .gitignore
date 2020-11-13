@@ -1,5 +1,3 @@
-
-*.v2
-VehicleServiceBook/.vs/VehicleServiceBook/v16/.suo
-VehicleServiceBook/VehicleServiceBook/obj/Debug/netcoreapp3.1/VehicleServiceBook.csprojAssemblyReference.cache
-VehicleServiceBook/.vs/VehicleServiceBook/DesignTimeBuild/.dtbcache.v2
+.v2
+VehicleServiceBook/.vs/*
+VehicleServiceBook/VehicleServiceBook/obj/*
