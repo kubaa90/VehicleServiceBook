@@ -1,0 +1,46 @@
+﻿
+@model VehicleServiceBook.ViewModels.FaultDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Szczegóły usterki";
+}
+@Html.HiddenFor(m => m.Id)
+
+
+
+<hr />
+<div class="row p-3">
+    <div class="col-12 border-bottom">
+        <h2 class="text-primary">@title</h2>
+    </div>
+    <div class="col-8 pt-4">
+        <div class="form-group row">
+            <dl class="row" style="text-align: left;">
+                <dt class="col-4">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Vehicle.Number)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Vehicle.Number)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="text-center">
+            <a asp-controller="fault" asp-action="index"
+               class="btn btn-primary">Powrót do listy</a>
+            <a asp-controller="fault" asp-action="edit" asp-route-id="@Model.Id"
+               class="btn btn-primary m-1">Edycja zgłoszenia</a>
+        </div>
+    </div>
+</div>
+
+

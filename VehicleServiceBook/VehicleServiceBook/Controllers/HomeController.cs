@@ -20,7 +20,15 @@ namespace VehicleServiceBook.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.IsInRole("Kierowca"))
+            {
+                return RedirectToAction("Create", "Fault");
+            }
+            else if ((User.IsInRole("Admin"))||(User.IsInRole("Obsługa")))
+            {
+                return RedirectToAction("Index", "Fault");
+            }
+            return View("Index");
         }
 
         public IActionResult Privacy()

@@ -18,5 +18,6 @@ namespace VehicleServiceBook.Context
         public DbSet<VehicleModel> Vehicles { get; set; }
 
         public DbSet<ProducerModel> Producers { get; set; }
+        public DbSet<FaultModel> Faults { get; set; }
     }
 }
