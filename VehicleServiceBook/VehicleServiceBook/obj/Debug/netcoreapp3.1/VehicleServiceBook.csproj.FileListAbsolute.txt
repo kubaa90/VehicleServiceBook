@@ -162,3 +162,8 @@ C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleS
 C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Vehicle\Edit.cshtml.g.cs
 C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Producer\Edit.cshtml.g.cs
 C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\VehicleServiceBook.csprojAssemblyReference.cache
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Fault\Create.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Fault\Edit.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Fault\Index.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Fault\Details.cshtml.g.cs
+C:\Users\jakub\OneDrive\Dokumenty\VehicleServiceBook\VehicleServiceBook\VehicleServiceBook\obj\Debug\netcoreapp3.1\Razor\Views\Fault\Confirm.cshtml.g.cs

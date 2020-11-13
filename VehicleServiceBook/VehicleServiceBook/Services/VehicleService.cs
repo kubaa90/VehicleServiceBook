@@ -25,7 +25,7 @@ namespace VehicleServiceBook.Services
 
         public VehicleModel Get(int id)
         {
-            return _context.Vehicles.SingleOrDefault(g => g.Id == id);
+            return _context.Vehicles.Include(d => d.Producer).SingleOrDefault(g => g.Id == id);
         }
 
         public IList<VehicleModel> GetAll()

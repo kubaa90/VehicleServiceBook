@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleServiceBook.Context;
 
 namespace VehicleServiceBook.Migrations
 {
     [DbContext(typeof(VehicleServiceContext))]
-    partial class VehicleServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20201111115606_Faults")]
+    partial class Faults
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,16 +235,10 @@ namespace VehicleServiceBook.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)")
-                        .HasMaxLength(450);
-
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
@@ -362,10 +358,6 @@ namespace VehicleServiceBook.Migrations
 
             modelBuilder.Entity("VehicleServiceBook.Models.FaultModel", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.HasOne("VehicleServiceBook.Models.VehicleModel", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId")

@@ -58,6 +58,7 @@ namespace VehicleServiceBook
                 .AddEntityFrameworkStores<VehicleServiceContext>();
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IProducerService, ProducerService>();
+            services.AddScoped<IFaultService, FaultService>();
             services.AddControllersWithViews();
         }
 

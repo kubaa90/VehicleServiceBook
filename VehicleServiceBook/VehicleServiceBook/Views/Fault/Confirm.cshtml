@@ -1,0 +1,61 @@
+﻿
+@model VehicleServiceBook.ViewModels.FaultConfirmViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = "Potwierdź poprawność wprowadzonych danych";
+}
+@Html.HiddenFor(m => m.Id)
+
+
+
+<hr />
+<div class="row p-3">
+    <div class="col-12 border-bottom">
+        <h2 class="text-primary">@title</h2>
+    </div>
+    <div class="col-8 pt-4">
+        <div class="form-group row">
+            <dl class="row" style="text-align: left;">
+                <dt class="col-4">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Vehicle.Number)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Vehicle.Number)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8">
+        <div class="text-center">
+            @if (User.IsInRole("Kierowca"))
+            {
+                <a asp-controller="Account" asp-action="Logout"
+                   class="btn btn-success">Zatwierdź i wyloguj</a>
+            }
+            @if ((User.IsInRole("Admin")) || (User.IsInRole("Obsługa")))
+            {
+                <a asp-controller="Fault" asp-action="Index"
+                   class="btn btn-success">Zatwierdź</a>
+            }
+            <a asp-controller="fault" asp-action="edit" asp-route-id="@Model.Id"
+               class="btn btn-primary m-1">Edycja zgłoszenia</a>
+            <a asp-controller="fault" asp-action="create"
+               class="btn btn-primary m-1">Nowe zgłoszenie</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
