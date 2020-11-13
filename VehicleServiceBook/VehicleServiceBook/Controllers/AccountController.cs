@@ -13,6 +13,7 @@ using VehicleServiceBook.ViewModels;
 
 namespace VehicleServiceBook.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -30,21 +31,18 @@ namespace VehicleServiceBook.Controllers
 
         }
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -128,7 +126,7 @@ namespace VehicleServiceBook.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Dashboard");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -156,7 +154,9 @@ namespace VehicleServiceBook.Controllers
             }
             return View(model);
         }
+        
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

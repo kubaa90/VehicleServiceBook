@@ -37,8 +37,9 @@
         <div class="text-center">
             @if (User.IsInRole("Kierowca"))
             {
-                <a asp-controller="Account" asp-action="Logout"
-                   class="btn btn-success">Zatwierdź i wyloguj</a>
+                <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout">
+                    <button type="submit" class="nav-link btn btn-link text-white">Zatwierdź i wyloguj się</button>
+                </form>
             }
             @if ((User.IsInRole("Admin")) || (User.IsInRole("Obsługa")))
             {
