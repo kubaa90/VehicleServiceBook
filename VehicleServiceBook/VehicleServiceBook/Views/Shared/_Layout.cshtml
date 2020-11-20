@@ -34,6 +34,7 @@
                                     <a class="dropdown-item" asp-area="" asp-controller="Fault" asp-action="Index">Usterki</a>
                                     <a class="dropdown-item" asp-area="" asp-controller="Vehicle" asp-action="Index">Pojazdy</a>
                                     <a class="dropdown-item" asp-controller="Producer" asp-action="Index">Producenci</a>
+                                    <a class="dropdown-item" asp-controller="System" asp-action="Index">Systemy/układy</a>
                                     <!--<div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Something else here</a>-->
                                 </div>
@@ -80,7 +81,27 @@
             @RenderBody()
         </main>
     </div>
-
+    <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Szczegóły usterki</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-center">
+                        <a asp-controller="fault" asp-action="index"
+                           class="btn btn-primary">Powrót do listy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2020 - ServiceBook
@@ -93,7 +114,9 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://kit.fontawesome.com/e19c476714.js"></script>
+<script src="https://kit.fontawesome.com/e19c476714.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="~/js/sweetAlertSubpage.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

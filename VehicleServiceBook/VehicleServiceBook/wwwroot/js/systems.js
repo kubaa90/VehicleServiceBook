@@ -1,37 +1,42 @@
 ﻿var dataTable;
 
 $(document).ready(function () {
+    /*$.ajax("/Admin/Producer/GetAll")
+        .done(function (result) {
+            console.log(result.data);
+        })
+        .fail(function () {
+            alert("error");
+        })
+        .always(function () {
+            alert("complete");
+        });*/
     loadDataTable();
 });
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/Fault/List",
+            "url": "/System/List",
             "dataSrc": "data"
         },
         "columns": [
-            { "data": "description", "width": "30%" },
-            { "data": "vehicle.number", "width": "15%" },
-            { "data": "addDateTimeString", "width": "15%" },
-            { "data": "identityUser.userName", "width": "15%" },
+            { "data": "name", "width": "30%" },
+            { "data": "description", "width": "50%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a onclick="showInPopup('@Url.Action("Details", "Fault", ${data}, Context.Request.Scheme)') class="btn btn-success text-white" style="cursor:pointer">
-                                    <i class="fas fa-info"></i> 
-                                </a>
-                                <a href="/Fault/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/System/Edit/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i> 
                                 </a>
-                                <a onclick=Delete("/Fault/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("/System/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i> 
                                 </a>
                             </div>
                            `;
-                }, "width": "25%"
+                }, "width": "20%"
             }
         ]
     });
@@ -60,19 +65,4 @@ function Delete(url) {
             });
         }
     });
-}
-showInPopup = (url, title) => {
-    $.ajax({
-        type: 'GET',
-        url: url,
-        success: function (res) {
-            $('#form-modal .modal-body').html(res);
-            $('#form-modal .modal-title').html(title);
-            $('#form-modal').modal('show');
-            // to make popup draggable
-            $('.modal-dialog').draggable({
-                handle: ".modal-header"
-            });
-        }
-    })
 }

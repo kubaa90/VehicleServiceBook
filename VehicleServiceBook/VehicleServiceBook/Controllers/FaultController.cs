@@ -27,7 +27,11 @@ namespace VehicleServiceBook.Controllers
         [Authorize(Roles = "Admin, Obsługa")]
         public IActionResult Index()
         {
-            return View();
+            FaultIndexViewModel faultIndexViewModel = new FaultIndexViewModel()
+            {
+                Faults = _faultService.GetAll()
+            };
+            return View("NewIndex", faultIndexViewModel);
         }
         [HttpGet]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
@@ -49,6 +53,8 @@ namespace VehicleServiceBook.Controllers
                         Description = viewModel.Description,
                         VehicleId = viewModel.VehicleId,
                         AddDateTime = DateTime.Now,
+                        Status = "Nowa",
+                        Action= null,
                         UserId = _userManager.GetUserId(User),
                         AddDateTimeString = DateTime.Now.ToString("g")
                     };
@@ -78,7 +84,7 @@ namespace VehicleServiceBook.Controllers
                 VehicleId = faultDetails.VehicleId,
                 Vehicle = _vehicleService.Get(faultDetails.VehicleId)
             };
-            return View(faultDetailsViewModel);
+            return View("NewDetails",faultDetailsViewModel);
         }
         [HttpGet]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
@@ -105,6 +111,48 @@ namespace VehicleServiceBook.Controllers
                 Id = faultToEdit.Id,
                 Description = faultToEdit.Description,
                 VehicleId = faultToEdit.VehicleId,
+            };
+            return View(faultEditViewModel);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Kierowca, Admin, Obsługa")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(FaultEditViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var faultEdited = _faultService.Get(viewModel.Id);
+                    faultEdited.Description = viewModel.Description;
+                    faultEdited.VehicleId = viewModel.VehicleId;
+                    _faultService.Update(faultEdited);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return View(viewModel);
+                }
+            }
+            else
+            {
+                return View(viewModel);
+            }
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin, Obsługa")]
+        public IActionResult Analyze(int id)
+        {
+            var faultToAnalyze = _faultService.Get(id);
+            ViewData["VehicleModelID"] = new SelectList(_vehicleService.GetAll(), "Id", "Number").OrderBy(x => x.Value);
+            FaultAnalyzeViewModel faultAnalyzeViewModel = new FaultAnalyzeViewModel()
+            {
+                Id = faultToAnalyze.Id,
+                Description = faultToAnalyze.Description,
+                VehicleId = faultToAnalyze.VehicleId,
+                IdentityUser = faultToAnalyze.IdentityUser,
+                AddDateTimeString = faultToAnalyze.AddDateTimeString,
+
             };
             return View(faultEditViewModel);
         }
