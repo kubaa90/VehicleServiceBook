@@ -59,6 +59,7 @@ namespace VehicleServiceBook
             services.AddScoped<IVehicleService, VehicleService>();
             services.AddScoped<IProducerService, ProducerService>();
             services.AddScoped<IFaultService, FaultService>();
+            services.AddScoped<ISystemService, SystemService>();
             services.AddControllersWithViews();
         }
 

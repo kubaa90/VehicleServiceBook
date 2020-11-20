@@ -22,11 +22,18 @@ namespace VehicleServiceBook.Models
 
         [ForeignKey("VehicleId")]
         public VehicleModel Vehicle { get; set; }
-        public DateTime? AddDateTime { get; set; }
-        public string AddDateTimeString { get; set; }
         [StringLength(450)]
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public IdentityUser IdentityUser { get; set; }
+        public DateTime AddDateTime { get; set; }
+
+        #nullable enable
+        public string? Action { get; set; }
+        public DateTime? AnalyzeDateTime { get; set; }
+        public DateTime? ClosedActionDateTime { get; set; }
+        public string? Status { get; set; }
+        
+
     }
 }
