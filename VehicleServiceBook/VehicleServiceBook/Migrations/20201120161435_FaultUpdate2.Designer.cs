@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleServiceBook.Context;
 
 namespace VehicleServiceBook.Migrations
 {
     [DbContext(typeof(VehicleServiceContext))]
-    partial class VehicleServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20201120161435_FaultUpdate2")]
+    partial class FaultUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,34 +230,30 @@ namespace VehicleServiceBook.Migrations
                     b.Property<DateTime>("AddDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("CloseDateTime")
+                    b.Property<DateTime?>("AnalyzeDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreateUserName")
-                        .HasColumnType("nvarchar(450)")
-                        .HasMaxLength(450);
+                    b.Property<DateTime?>("ClosedDateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(500)")
                         .HasMaxLength(500);
 
-                    b.Property<string>("OperatorRemarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ProcessDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ProcessedUserName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
 
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
@@ -312,12 +310,6 @@ namespace VehicleServiceBook.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("HasFault")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsAbleToDrive")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Number")
                         .IsRequired()
@@ -403,6 +395,10 @@ namespace VehicleServiceBook.Migrations
 
             modelBuilder.Entity("VehicleServiceBook.Models.FaultModel", b =>
                 {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "CreateUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.HasOne("VehicleServiceBook.Models.VehicleModel", "Vehicle")
                         .WithMany()
                         .HasForeignKey("VehicleId")

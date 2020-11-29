@@ -22,6 +22,7 @@
             <th>Numer pojazdu</th>
             <th>Dodano</th>
             <th>Dodał/a</th>
+            <th>Status</th>
             <th>Akcja</th>
         </tr>
         </thead>
@@ -32,18 +33,18 @@
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>@Html.DisplayFor(modelItem => item.Vehicle.Number)</td>
                 <td>@Html.DisplayFor(modelItem => item.AddDateTimeString)</td>
-                <td>@Html.DisplayFor(modelItem => item.IdentityUser.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreateUserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Status)</td>
                 <td>
                     <div class="text-center">
                         <a onclick="SubPagePopup('/Details?id=@item.Id')"
                            class="btn btn-info text-white" style="cursor:pointer">
                             <i class="fas fa-info-circle"></i>
                         </a>
-                        <a href="/Fault/Edit?id=@item.Id" class="btn btn-success text-white" style="cursor:pointer">
+                        <a onclick="SubPagePopup('/Process?id=@item.Id')" class="btn btn-success text-white" style="cursor:pointer">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a onclick="SubPagePopup('/Delete?id=@item.Id')"
-                           class="btn btn-danger text-white" style="cursor:pointer">
+                        <a onclick="Delete('/Delete?id=@item.Id')" class="btn btn-danger text-white" style="cursor:pointer">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                     </div>
@@ -59,46 +60,41 @@
         $('#tblData').DataTable({
             language: {
                 "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
-            }
+            },
         });
     });
+
     var currentpath;
     var fullurl;
     var subpathCopy;
 
-    function SubPagePopup(subpath, widthSize) {
-        var widthLocal = 1000;
-        if (typeof widthSize !== "undefined") {
-            widthLocal = widthSize
-        }
+    function Delete(subpath) {
         subpathCopy = subpath
         currentpath = window.location.pathname
         fullurl = currentpath + subpathCopy
-        console.log('fullurl: ', fullurl, ' widthSize: ', widthSize, ' widthLocal: ', widthLocal)
-        $.ajax({
-            type: "get",
-            url: fullurl,
-            cache: false,
-            processData: false,
-            dataType: "html",
-            success: function (result) {
-                Swal.fire({
-                    showClass: {
-                        popup: '',
-                        icon: ''
-                    },
-                    hideClass: {
-                        popup: '',
-                    },
-                    width: widthLocal,
-                    html: result,
-                    showCloseButton: true,
-                    showConfirmButton: false,
-                    focusConfirm: false,
-                })
-                $('.selectpicker').selectpicker('refresh')
+        Swal.fire({
+            title: 'Czy jesteś pewien?',
+            text: "Nie będzie możliwości przywrócenia danych!",
+            icon: 'warning',
+            showCancelButton: true,
+            timer: 20000,
+            confirmButtonText: 'Tak, usuń',
+            cancelButtonText: 'Nie, wróć',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "DELETE",
+                    url: fullurl,
+                    success:
+                        function (){
+                            location.reload();
+                        }
+                });
             }
-        });
+            else if (
+                result.dismiss === Swal.DismissReason.cancel
+            );
+        })
     }
 </script>
 

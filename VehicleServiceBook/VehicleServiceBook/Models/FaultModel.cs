@@ -23,17 +23,29 @@ namespace VehicleServiceBook.Models
         [ForeignKey("VehicleId")]
         public VehicleModel Vehicle { get; set; }
         [StringLength(450)]
-        public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        public IdentityUser IdentityUser { get; set; }
+        [Display(Name = "Dodał/a")]
+        public string CreateUserName { get; set; }
         public DateTime AddDateTime { get; set; }
 
         #nullable enable
         public string? Action { get; set; }
-        public DateTime? AnalyzeDateTime { get; set; }
-        public DateTime? ClosedActionDateTime { get; set; }
+        [Display(Name = "Ostatnio przetwarzał/a")]
+        public string? ProcessedUserName { get; set; }
+        public DateTime? ProcessDateTime { get; set; }
+        public DateTime? CloseDateTime { get; set; }
         public string? Status { get; set; }
-        
+        [Display(Name = "Uwagi operatora")]
+        public string? OperatorRemarks { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Dodano")]
+        public string? AddDateTimeString { get; set; }
+        [NotMapped]
+        [Display(Name = "Ostatnia akcja")]
+        public string? ProcessDateTimeString { get; set; }
+        [NotMapped]
+        [Display(Name = "Zamknięto")]
+        public string? CloseDateTimeString { get; set; }
 
     }
 }

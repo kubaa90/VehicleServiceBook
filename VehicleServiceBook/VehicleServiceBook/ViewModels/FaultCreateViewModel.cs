@@ -8,7 +8,7 @@ using VehicleServiceBook.Models;
 
 namespace VehicleServiceBook.ViewModels
 {
-    public class FaultCreateViewModel
+    public class FaultCreateViewModel:FaultModel
     {
 
         public int FaultId { get; set; }
@@ -19,6 +19,8 @@ namespace VehicleServiceBook.ViewModels
         [Display(Name = "Numer Pojazdu")]
         [Required]
         public int VehicleId { get; set; }
+
+
 
     }
 }

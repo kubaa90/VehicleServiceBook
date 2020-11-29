@@ -31,5 +31,11 @@ namespace VehicleServiceBook.Models
         public DateTime RegistrationDate { get; set; }
 
         public string RegistrationDateString { get; set; }
+
+        public bool HasFault { get; set; }
+
+#nullable enable
+        [Display(Name = "Wyłączony z ruchu")]
+        public bool? IsAbleToDrive { get; set; }
     }
 }
