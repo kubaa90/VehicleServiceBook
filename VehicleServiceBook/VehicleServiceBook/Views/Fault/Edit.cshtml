@@ -6,8 +6,9 @@
 }
 
 
-<form method="post" enctype="multipart/form-data">
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
     <div class="row p-3 border">
+        @Html.HiddenFor(model => model.FaultId)
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-12 border-bottom">
             <h2 class="text-primary">@title</h2>
@@ -45,7 +46,7 @@
                     </div>
                 }
                 <div class="col">
-                    <a asp-action="Create" class="btn btn-primary form-control">Zatwierdź i dodaj nową usterkę</a>
+                    <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Edytuj</button>
                 </div>
             </div>
         </div>

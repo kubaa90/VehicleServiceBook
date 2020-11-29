@@ -1,0 +1,89 @@
+﻿
+@model VehicleServiceBook.ViewModels.FaultProcessViewModel
+@{
+    ViewData["Title"] = "NewDetails";
+    var title = "Przetwarzanie usterki";
+    Layout = null;
+}
+
+<hr />
+<form asp-action="Process" method="post" enctype="multipart/form-data">
+    <div class="row p-3">
+        @Html.HiddenFor(model => model.FaultId)
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col" style="text-align: left;">
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="CreateUserName"></label>
+                </div>
+                <div class="col">
+                    @Html.DisplayFor(model => model.CreateUserName)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="Description"></label>
+                </div>
+                <div class="col">
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label for="choosePlan">
+                        Pojazd
+                    </label>
+                </div>
+                <div class="col">
+                    <select asp-for="@Model.VehicleId" class="form-control" asp-items="ViewBag.VehicleModelID">
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="Action" class="control-label">Akcja</label>
+                </div>
+                <div class="col">
+                    @Html.DropDownListFor(x => x.Action, new List<SelectListItem>
+                    { new SelectListItem { Text = "Przekaż do serwisu wewnętrznego", Value = "IntService"},
+                        new SelectListItem { Text = "Przekaż do serwisu zewnętrznego", Value = "ExtService"},
+                        new SelectListItem { Text = "Zgłoś producentowi (naprawa gwaranycjna)", Value = "Warranty"},
+                        new SelectListItem { Text = "Ignoruj", Value = "Ignore"},
+                        new SelectListItem { Text = "Oznacz jako zamknięta", Value = "Closed"},
+                    }, "-Wybierz akcję-", new { @class = "form-control" })
+                    <span asp-validation-for="Action" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label asp-for="IsVehicleAbleToDrive"></label>
+                </div>
+                <div class="col">
+                    @Html.CheckBoxFor(m => m.IsVehicleAbleToDrive)
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    @Html.DisplayNameFor(model => model.OperatorRemarks)
+                    <textarea class="form-control" asp-for="OperatorRemarks"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <a asp-action="Index" class="btn btn-primary form-control">Powrót do listy</a>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary form-control">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+

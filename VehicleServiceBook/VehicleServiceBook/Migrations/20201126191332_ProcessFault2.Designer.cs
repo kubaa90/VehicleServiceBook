@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleServiceBook.Context;
 
 namespace VehicleServiceBook.Migrations
 {
     [DbContext(typeof(VehicleServiceContext))]
-    partial class VehicleServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20201126191332_ProcessFault2")]
+    partial class ProcessFault2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

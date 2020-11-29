@@ -7,8 +7,6 @@
 
 @Html.HiddenFor(m => m.Id)
 
-
-
 <hr />
 <div class="row p-3">
     <div class="col-12 border-bottom">
@@ -18,16 +16,52 @@
         <div class="form-group row">
             <dl class="row" style="text-align: left;">
                 <dt class="col-4">
-                    @Html.DisplayNameFor(model => model.Description)
+                    @Html.DisplayNameFor(model => model.Fault.Description)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Description)
+                    @Html.DisplayFor(model => model.Fault.Description)
                 </dd>
                 <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Vehicle.Number)
+                    @Html.DisplayNameFor(model => model.Fault.Vehicle.Number)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Vehicle.Number)
+                    @Html.DisplayFor(model => model.Fault.Vehicle.Number)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Fault.CreateUserName)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Fault.CreateUserName)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.AddDateTimeString)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.AddDateTimeString)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Fault.ProcessedUserName)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Fault.ProcessedUserName)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.ProcessDateTimeString)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.ProcessDateTimeString)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Fault.Status)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Fault.Status)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.OperatorRemarks)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.OperatorRemarks)
                 </dd>
             </dl>
         </div>
@@ -38,8 +72,6 @@
         <div class="text-center">
             <a asp-controller="fault" asp-action="index"
                class="btn btn-primary">Powrót do listy</a>
-            <a asp-controller="fault" asp-action="edit" asp-route-id="@Model.Id"
-               class="btn btn-primary m-1">Edycja zgłoszenia</a>
         </div>
     </div>
 </div>
