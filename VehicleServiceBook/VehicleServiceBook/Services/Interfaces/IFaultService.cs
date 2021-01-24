@@ -9,6 +9,7 @@ namespace VehicleServiceBook.Services.Interfaces
     public interface IFaultService
     {
         bool Create(FaultModel vehicle);
+        Task<bool> CreateAsync(FaultModel fault);
         FaultModel Get(int id);
         public Task<FaultModel> GetAsync(int id);
 
@@ -17,7 +18,7 @@ namespace VehicleServiceBook.Services.Interfaces
         bool Update(FaultModel vehicle);
         public bool CheckBeforeDelete(int id);
         bool Delete(int id);
-        public Task DeleteAsync(int id);
+        public Task<bool> DeleteAsync(int id);
         string ProcessStatus(string action);
         public string ConvertAddDateTimeToString(DateTime date);
         public string ConvertProcessTimeToString(DateTime? date);

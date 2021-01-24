@@ -37,7 +37,7 @@ namespace VehicleServiceBook.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(VehicleCreateViewModel viewModel)
+        public async Task<ActionResult> Create(VehicleCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -52,7 +52,7 @@ namespace VehicleServiceBook.Controllers
                         RegistrationDate = viewModel.RegistrationDate,
                         RegistrationDateString = viewModel.RegistrationDate.ToString("d")
                     };
-                    _vehicleService.Create(vehicle);
+                    await _vehicleService.CreateAsync(vehicle);
                     return RedirectToAction("Index");
                 }
                 catch
@@ -67,9 +67,9 @@ namespace VehicleServiceBook.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var vehicleToEdit = _vehicleService.Get(id);
+            var vehicleToEdit = await _vehicleService.GetAsync(id);
             ViewData["ProducerModelID"] = new SelectList(_producerService.GetAll(), "Id", "Name").OrderBy(x => x.Text);
             VehicleEditViewModel vehicleEditViewModel = new VehicleEditViewModel
             {
@@ -90,7 +90,7 @@ namespace VehicleServiceBook.Controllers
             {
                 try
                 {
-                    var vehicleEdited = _vehicleService.Get(viewModel.Id);
+                    var vehicleEdited = await _vehicleService.GetAsync(viewModel.Id);
                     vehicleEdited.Number = viewModel.Number;
                     vehicleEdited.VIN = viewModel.VIN;
                     vehicleEdited.PlateNumber = viewModel.PlateNumber;
@@ -111,20 +111,20 @@ namespace VehicleServiceBook.Controllers
         }
         #region API CALLS
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            var allObj = _vehicleService.GetAll();
+            var allObj = await _vehicleService.GetAllAsync();
             return Json(new { data = allObj });
         }
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var objFromDb = _vehicleService.Get(id);
+            var objFromDb = await _vehicleService.GetAsync(id);
             if (objFromDb == null)
             {
                 return Json(new { success = false, message = "Błąd przy usuwaniu" });
             }
-            _vehicleService.Delete(id);
+            await _vehicleService.DeleteAsync(id);
             return Json(new { success = true, message = "Usunięto" });
         }
         #endregion

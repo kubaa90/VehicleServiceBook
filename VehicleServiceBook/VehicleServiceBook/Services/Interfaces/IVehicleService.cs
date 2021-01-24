@@ -8,13 +8,13 @@ namespace VehicleServiceBook.Services.Interfaces
 {
     public interface IVehicleService
     {
-        bool Create(VehicleModel vehicle);
-        VehicleModel Get(int id);
+        Task<bool> CreateAsync(VehicleModel vehicle);
+        Task<VehicleModel> GetAsync(int id);
 
-        IList<VehicleModel> GetAll();
+        Task<IList<VehicleModel>> GetAllAsync();
 
         bool Update(VehicleModel vehicle);
         public bool CheckBeforeDelete(int id);
-        bool Delete(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }

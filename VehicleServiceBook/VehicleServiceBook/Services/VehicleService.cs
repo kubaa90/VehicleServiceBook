@@ -17,20 +17,20 @@ namespace VehicleServiceBook.Services
         {
             _context = context;
         }
-        public bool Create(VehicleModel vehicle)
+        public async Task<bool> CreateAsync(VehicleModel vehicle)
         {
-            _context.Vehicles.Add(vehicle);
+            await _context.Vehicles.AddAsync(vehicle);
             return _context.SaveChanges() > 0;
         }
 
-        public VehicleModel Get(int id)
+        public async Task<VehicleModel> GetAsync(int id)
         {
-            return _context.Vehicles.Include(d => d.Producer).SingleOrDefault(g => g.Id == id);
+            return await _context.Vehicles.Include(d => d.Producer).SingleOrDefaultAsync(g => g.Id == id);
         }
 
-        public IList<VehicleModel> GetAll()
+        public async Task<IList<VehicleModel>> GetAllAsync()
         {
-            return _context.Vehicles.Include(d => d.Producer).ToList();
+            return await _context.Vehicles.Include(d => d.Producer).ToListAsync();
         }
 
         public bool Update(VehicleModel vehicle)
@@ -44,9 +44,9 @@ namespace VehicleServiceBook.Services
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var vehicle = _context.Vehicles.SingleOrDefault(d => d.Id == id);
+            var vehicle = await _context.Vehicles.SingleOrDefaultAsync(d => d.Id == id);
             if (vehicle == null)
                 return false;
 

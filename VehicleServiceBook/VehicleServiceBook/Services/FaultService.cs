@@ -22,7 +22,11 @@ namespace VehicleServiceBook.Services.Interfaces
             _context.Faults.Add(fault);
             return _context.SaveChanges() > 0;
         }
-
+        public async Task<bool> CreateAsync(FaultModel fault)
+        {
+            await _context.Faults.AddAsync(fault);
+            return _context.SaveChanges() > 0;
+        }
         public FaultModel Get(int id)
         {
             return _context.Faults.Include(d => d.Vehicle).SingleOrDefault(g => g.Id == id);
@@ -104,7 +108,15 @@ namespace VehicleServiceBook.Services.Interfaces
             _context.Faults.Remove(fault);
             return _context.SaveChanges() > 0;
         }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var fault = await _context.Faults.SingleOrDefaultAsync(d => d.Id == id);
+            if (fault == null)
+                return false;
 
+            _context.Faults.Remove(fault);
+            return _context.SaveChanges() > 0;
+        }
         public string ProcessStatus(string action)
         {
             string status = string.Empty;
@@ -153,12 +165,6 @@ namespace VehicleServiceBook.Services.Interfaces
                 processedRemarks = remarks;
                 return processedRemarks;
             }
-        }
-        public async Task DeleteAsync(int id)
-        {
-            var fault = await _context.Faults.SingleOrDefaultAsync(g => g.Id == id);
-            _context.Faults.Remove(fault);
-            await _context.SaveChangesAsync();
         }
     }
 }

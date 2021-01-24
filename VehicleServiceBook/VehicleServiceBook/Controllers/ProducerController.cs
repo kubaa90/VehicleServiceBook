@@ -23,9 +23,15 @@ namespace VehicleServiceBook.Controllers
             _producerService = producerService;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var producers = await _producerService.GetAllAsync();
+            ProducerIndexViewModel producerIndexViewModel = new ProducerIndexViewModel()
+            {
+                Producers = producers
+            };
+            return View("Index", producerIndexViewModel);
         }
         [HttpGet]
         public IActionResult Create()
@@ -44,7 +50,7 @@ namespace VehicleServiceBook.Controllers
                         Name = viewModel.Name,
                         Address = viewModel.Address
                     };
-                    _producerService.Create(producer);
+                    await _producerService.CreateAsync(producer);
                     return RedirectToAction("Index");
                 }
                 catch
@@ -58,9 +64,9 @@ namespace VehicleServiceBook.Controllers
             }
         }
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var producerToEdit = _producerService.Get(id);
+            var producerToEdit = await _producerService.GetAsync(id);
             ProducerEditViewModel producerEditViewModel = new ProducerEditViewModel()
             {
                 Id = producerToEdit.Id,
@@ -77,7 +83,7 @@ namespace VehicleServiceBook.Controllers
             {
                 try
                 {
-                    var producerEdited = _producerService.Get(viewModel.Id);
+                    var producerEdited = await _producerService.GetAsync(viewModel.Id);
                     producerEdited.Name = viewModel.Name;
                     producerEdited.Address = viewModel.Address;
                     _producerService.Update(producerEdited);
@@ -92,6 +98,17 @@ namespace VehicleServiceBook.Controllers
             {
                 return View(viewModel);
             }
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin, Obsługa")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var producerForDetails = await _producerService.GetAsync(id);
+            ProducerDetailsViewModel producerDetailsViewModel = new ProducerDetailsViewModel()
+            {
+                Producer = producerForDetails,
+            };
+            return View("Details", producerDetailsViewModel);
         }
         #region API CALLS
         [HttpGet]

@@ -14,6 +14,7 @@ namespace VehicleServiceBook.Models
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
+        [Display(Name = "Adres")]
         [Required]
         [MaxLength(300)]
         public string Address { get; set; }

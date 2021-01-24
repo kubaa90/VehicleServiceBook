@@ -36,14 +36,14 @@ namespace VehicleServiceBook.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["VehicleModelID"] = new SelectList(_vehicleService.GetAll(), "Id", "Number").OrderBy(x => x.Text);
+            ViewData["VehicleModelID"] = new SelectList(await _vehicleService.GetAllAsync(), "Id", "Number").OrderBy(x => x.Text);
             return View();
         }
         [HttpPost]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
-        public IActionResult Create(FaultCreateViewModel viewModel)
+        public async Task<IActionResult> Create(FaultCreateViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace VehicleServiceBook.Controllers
                         OperatorRemarks = "-",
                         CreateUserName = _userManager.GetUserName(User),
                     };
-                    _faultService.Create(fault);
+                    await _faultService.CreateAsync(fault);
                     return RedirectToAction("Confirm", new { id = fault.Id });
                 }
                 catch
@@ -77,9 +77,9 @@ namespace VehicleServiceBook.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin, Obsługa")]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var faultForDetails = _faultService.Get(id);
+            var faultForDetails = await _faultService.GetAsync(id);
             FaultDetailsViewModel faultDetailsViewModel = new FaultDetailsViewModel()
             {
                 Fault = faultForDetails,
@@ -91,24 +91,24 @@ namespace VehicleServiceBook.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
-        public IActionResult Confirm(int id)
+        public async Task<IActionResult> Confirm(int id)
         {
-            var faultConfirm = _faultService.Get(id);
+            var faultConfirm = await _faultService.GetAsync(id);
             FaultConfirmViewModel faultConfirmViewModel = new FaultConfirmViewModel()
             {
                 Id = faultConfirm.Id,
                 Description = faultConfirm.Description,
                 VehicleId = faultConfirm.VehicleId,
-                Vehicle = _vehicleService.Get(faultConfirm.VehicleId)
+                Vehicle = await _vehicleService.GetAsync(faultConfirm.VehicleId)
             };
             return View(faultConfirmViewModel);
         }
         [HttpGet]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var faultToEdit = _faultService.Get(id);
-            ViewData["VehicleModelID"] = new SelectList(_vehicleService.GetAll(), "Id", "Number").OrderBy(x => x.Value);
+            var faultToEdit = await _faultService.GetAsync(id);
+            ViewData["VehicleModelID"] = new SelectList(await _vehicleService.GetAllAsync(), "Id", "Number").OrderBy(x => x.Value);
             FaultEditViewModel faultEditViewModel = new FaultEditViewModel()
             {
                 FaultId = faultToEdit.Id,
@@ -120,13 +120,13 @@ namespace VehicleServiceBook.Controllers
         [HttpPost]
         [Authorize(Roles = "Kierowca, Admin, Obsługa")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(FaultEditViewModel viewModel)
+        public async Task<IActionResult> Edit(FaultEditViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var faultEdited = _faultService.Get(viewModel.FaultId);
+                    var faultEdited = await _faultService.GetAsync(viewModel.FaultId);
                     faultEdited.Id = viewModel.Id;
                     faultEdited.Description = viewModel.Description;
                     faultEdited.VehicleId = viewModel.VehicleId;
@@ -145,11 +145,11 @@ namespace VehicleServiceBook.Controllers
         }
         [HttpGet]
         [Authorize(Roles = "Admin, Obsługa")]
-        public IActionResult Process(int id)
+        public async Task<IActionResult> Process(int id)
         {
-            var faultToProcess = _faultService.Get(id);
-            var vehicleToChangeStatus = _vehicleService.Get(faultToProcess.VehicleId);
-            ViewData["VehicleModelID"] = new SelectList(_vehicleService.GetAll(), "Id", "Number").OrderBy(x => x.Value);
+            var faultToProcess = await _faultService.GetAsync(id);
+            var vehicleToChangeStatus = await _vehicleService.GetAsync(faultToProcess.VehicleId);
+            ViewData["VehicleModelID"] = new SelectList(await _vehicleService.GetAllAsync(), "Id", "Number").OrderBy(x => x.Value);
             FaultProcessViewModel faultProcessViewModel = new FaultProcessViewModel()
             {
                 FaultId = faultToProcess.Id,
@@ -166,16 +166,16 @@ namespace VehicleServiceBook.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin, Obsługa")]
         [ValidateAntiForgeryToken]
-        public IActionResult Process(FaultProcessViewModel viewModel)
+        public async Task<IActionResult> Process(FaultProcessViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var faultProcessed = _faultService.Get(viewModel.FaultId);
+                    var faultProcessed = await _faultService.GetAsync(viewModel.FaultId);
                     faultProcessed.Description = viewModel.Description;
                     faultProcessed.VehicleId = viewModel.VehicleId;
-                    var vehicleToChangeStatus = _vehicleService.Get(viewModel.VehicleId);
+                    var vehicleToChangeStatus = await _vehicleService.GetAsync(viewModel.VehicleId);
                     vehicleToChangeStatus.IsAbleToDrive = viewModel.IsVehicleAbleToDrive;
                     faultProcessed.Action = viewModel.Action;
                     faultProcessed.Status = _faultService.ProcessStatus(viewModel.Action);
@@ -199,9 +199,9 @@ namespace VehicleServiceBook.Controllers
         #region API CALLS
         [HttpGet]
         [Authorize(Roles = "Admin, Obsługa")]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
-            var allObj = _faultService.GetAll();
+            var allObj = await _faultService.GetAllAsync();
             return Json(new { data = allObj });
         }
         [HttpDelete]
