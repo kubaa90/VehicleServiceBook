@@ -26,15 +26,22 @@ namespace VehicleServiceBook.Controllers
             _userManager = userManager;
             _producerService = producerService;
         }
-        public IActionResult Index()
+        [HttpGet]
+        [Authorize(Roles = "Admin, Obsługa")]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var vehicles = await _vehicleService.GetAllAsync();
+            VehicleIndexViewModel vehicleIndexViewModel = new VehicleIndexViewModel()
+            {
+                Vehicles = vehicles
+            };
+            return View("Index", vehicleIndexViewModel);
         }
         [HttpGet]
         public IActionResult Create()
         {
             ViewData["ProducerModelID"] = new SelectList(_producerService.GetAll(), "Id", "Name").OrderBy(x => x.Text);
-            return View();
+            return View("NewCreate");
         }
         [HttpPost]
         public async Task<ActionResult> Create(VehicleCreateViewModel viewModel)
@@ -45,12 +52,13 @@ namespace VehicleServiceBook.Controllers
                 {
                     VehicleModel vehicle = new VehicleModel()
                     {
-                        Number = viewModel.Number,
-                        VIN = viewModel.VIN,
-                        PlateNumber = viewModel.PlateNumber,
-                        ProducerId = viewModel.ProducerId,
-                        RegistrationDate = viewModel.RegistrationDate,
-                        RegistrationDateString = viewModel.RegistrationDate.ToString("d")
+                        Number = viewModel.Vehicle.Number,
+                        VIN = viewModel.Vehicle.VIN,
+                        PlateNumber = viewModel.Vehicle.PlateNumber,
+                        ProducerId = viewModel.Vehicle.ProducerId,
+                        RegistrationDate = viewModel.Vehicle.RegistrationDate,
+                        IsOnWarranty = viewModel.Vehicle.IsOnWarranty,
+                        WarrantyTerms= viewModel.Vehicle.IsOnWarranty ? viewModel.Vehicle.WarrantyTerms : null
                     };
                     await _vehicleService.CreateAsync(vehicle);
                     return RedirectToAction("Index");
@@ -74,11 +82,7 @@ namespace VehicleServiceBook.Controllers
             VehicleEditViewModel vehicleEditViewModel = new VehicleEditViewModel
             {
                 Id = vehicleToEdit.Id,
-                Number = vehicleToEdit.Number,
-                VIN = vehicleToEdit.VIN,
-                PlateNumber = vehicleToEdit.PlateNumber,
-                ProducerId = vehicleToEdit.ProducerId,
-                RegistrationDate = vehicleToEdit.RegistrationDate,
+                Vehicle = vehicleToEdit
             };
             return View(vehicleEditViewModel);
         }
@@ -91,11 +95,11 @@ namespace VehicleServiceBook.Controllers
                 try
                 {
                     var vehicleEdited = await _vehicleService.GetAsync(viewModel.Id);
-                    vehicleEdited.Number = viewModel.Number;
-                    vehicleEdited.VIN = viewModel.VIN;
-                    vehicleEdited.PlateNumber = viewModel.PlateNumber;
-                    vehicleEdited.ProducerId = viewModel.ProducerId;
-                    vehicleEdited.RegistrationDate = viewModel.RegistrationDate;
+                    vehicleEdited.Number = viewModel.Vehicle.Number;
+                    vehicleEdited.VIN = viewModel.Vehicle.VIN;
+                    vehicleEdited.PlateNumber = viewModel.Vehicle.PlateNumber;
+                    vehicleEdited.ProducerId = viewModel.Vehicle.ProducerId;
+                    vehicleEdited.RegistrationDate = viewModel.Vehicle.RegistrationDate;
                     _vehicleService.Update(vehicleEdited);
                     return RedirectToAction("Index");
                 }
@@ -108,6 +112,17 @@ namespace VehicleServiceBook.Controllers
             {
                 return View(viewModel);
             }
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin, Obsługa")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var vehicleForDetails = await _vehicleService.GetAsync(id);
+            VehicleDetailsViewModel vehicleDetailsViewModel = new VehicleDetailsViewModel()
+            {
+                Vehicle = vehicleForDetails,
+            };
+            return View("Details", vehicleDetailsViewModel);
         }
         #region API CALLS
         [HttpGet]

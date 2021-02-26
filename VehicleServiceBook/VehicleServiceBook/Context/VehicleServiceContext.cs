@@ -25,6 +25,8 @@ namespace VehicleServiceBook.Context
 
         public DbSet<SystemModel> Systems { get; set; }
 
+        public DbSet<InternalServiceModel> InternalServices { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

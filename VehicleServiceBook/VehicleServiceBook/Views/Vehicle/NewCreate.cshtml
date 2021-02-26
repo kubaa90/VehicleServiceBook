@@ -5,73 +5,113 @@
     var title = "Dodaj pojazd";
 }
 
+<style>
+    .fa-info-circle {
+        color: dodgerblue;
+        position: relative;
+        top: 2px;
+        transition: 0.5s;
+    }
 
-<form method="post" enctype="multipart/form-data">
-    <div class="row col-9 p-2 border">
+        .fa-info-circle:hover {
+            bottom: 0px;
+            text-shadow: 5px 5px 5px #eeeeee;
+        }
+    #warrantyTermsInput{
+        padding-right:0px;
+    }
+</style>
+<form method="post" enctype="multipart/form-data" name="VehicleCreateForm" id="VehicleCreateForm">
+    <div class="row col-12 p-2">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="col-11 border-bottom">
             <h2 class="text-primary">@title</h2>
         </div>
         <div class="col-11 pt-2">
             <div class="form-group row">
-                <div class="col-4">
+                <div class="col-3">
                     <label asp-for="Vehicle.Number"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-7">
                     <input asp-for="Vehicle.Number" class="form-control" />
                     <span asp-validation-for="Vehicle.Number" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-4">
+                <div class="col-3">
                     <label asp-for="Vehicle.VIN"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-7">
                     <input asp-for="Vehicle.VIN" class="form-control" />
                     <span asp-validation-for="Vehicle.VIN" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-4">
+                <div class="col-3">
                     <label asp-for="Vehicle.PlateNumber"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-7">
                     <input asp-for="Vehicle.PlateNumber" class="form-control" />
                     <span asp-validation-for="Vehicle.PlateNumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-4">
+                <div class="col-3">
                     <label asp-for="Vehicle.RegistrationDate"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-7">
                     <input asp-for="Vehicle.RegistrationDate" class="form-control" />
                     <span asp-validation-for="Vehicle.RegistrationDate" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="chooseProducer" class="col-sm-2 label-size col-form-label">
-                    Producent
-                </label>
-                <div class="col-sm-3">
+                <div class="col-3">
+                    <label asp-for="Vehicle.Producer"></label>
+                </div>
+                <div class="col-7">
                     <select asp-for="Vehicle.ProducerId" class="form-control" asp-items="ViewBag.ProducerModelID">
                     </select>
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-sm-3">
+                <div class="col-3">
                     <label asp-for="Vehicle.IsOnWarranty"></label>
                 </div>
-                <div class="col" id="warrantyCheckbox">
+                <div class="col-7" id="warrantyCheckboxCreate">
                     @Html.CheckBoxFor(m => m.Vehicle.IsOnWarranty, htmlAttributes: new { @checked = true })
                 </div>
             </div>
-            <div id="warrantyTerms" class="form-group row">
-                <div class="col">
-                    @Html.DisplayNameFor(model => model.Vehicle.WarrantyTerms)
-                    <input class="form-control" asp-for="Vehicle.WarrantyTerms" />
+            <div id="warrantyTermsCreate" class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Vehicle.WarrantyTerms"></label>
+                </div>
+                <div class="col-5" id="warrantyTermsInputCreate">
+                    <input asp-for="Vehicle.WarrantyTerms" class="form-control" />
+                    <span asp-validation-for="Vehicle.WarrantyTerms" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    <div class="info">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                        <span class="extra-info">
+                            Np. do 36 miesięcy lub 300 000 km
+                        </span>
+                    </div>
                 </div>
             </div>
+            @*<div id="warrantyTerms" class="form-group row">
+            <div class="col-4">
+                @Html.DisplayNameFor(model => model.Vehicle.WarrantyTerms)
+                <input class="form-control" asp-for="Vehicle.WarrantyTerms" />
+            </div>
+            <div class="col-sm-2  pl-sm-1">
+                <div class="info">
+                    <i class="fas fa-info-circle fa-lg"></i>
+                    <span class="extra-info">
+                        Np. do 36 miesięcy lub 300 000 km
+                    </span>
+                </div>
+            </div>
+        </div>*@
             <div class="row">
                 <div class="col">
                     <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Dodaj</button>
@@ -90,10 +130,20 @@
 
     <script>
 
-        $(document).ready(function () {
-            $('#warrantyCheckbox').change(function () {
-                $('#warrantyTerms').fadeToggle();
-            });
+        //$(document).ready(function () {
+        //    $('#warrantyCheckbox').change(function () {
+        //        if ($('#warrantyCheckbox').is(':checked')) {
+        //            $('#warrantyTerms').fadeIn();
+        //        } else {
+        //            $('#warrantyTerms').fadeOut();
+        //        }
+        //    });
+        //});
+        if (!$('#warrantyCheckboxCreate input[type="checkbox"]').prop('checked')) {
+            $("#warrantyTermsCreate").fadeToggle(0)
+        }
+        $('#warrantyCheckboxCreate input[type="checkbox"]').click(function () {
+            $('#warrantyTermsCreate').fadeToggle();
         });
         //function isOnWarranty() {
         //    if (document.getElementById('warrantyCheckbox').checked) {
@@ -120,6 +170,7 @@
     </script>
 
 }
+
 
 
 

@@ -1,0 +1,73 @@
+﻿@model VehicleServiceBook.ViewModels.VehicleDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = null;
+    var title = "Szczegóły pojazdu";
+}
+
+@Html.HiddenFor(m => m.Vehicle.Id)
+
+<hr />
+<div class="row p-3">
+    <div class="col-12 border-bottom">
+        <h2 class="text-primary">@title</h2>
+    </div>
+    <div class="col-10 pt-4">
+        <div class="form-group row">
+            <dl class="row" style="text-align: left;">
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Vehicle.Number)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.Vehicle.Number)
+                </dd>
+                <dt class="col-sm-5">
+                    @Html.DisplayNameFor(model => model.Vehicle.VIN)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.Vehicle.VIN)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Vehicle.PlateNumber)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.Vehicle.PlateNumber)
+                </dd>
+                <dt class="col-5">
+                    Producent
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.Vehicle.Producer.Name)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Vehicle.RegistrationDate)
+                </dt>
+                <dd class="col-sm-7">
+                    @Html.DisplayFor(model => model.Vehicle.RegistrationDate)
+                </dd>
+                <dt class="col-5">
+                    @Html.DisplayNameFor(model => model.Vehicle.IsOnWarranty)
+                </dt>
+                <dd id="warrantyCheckboxDetails" class="col-sm-7">
+                    @(Model.Vehicle.IsOnWarranty?"TAK":"NIE")
+                </dd>
+                <dt class="col-5 warrantyTermsDetails">
+                    @Html.DisplayNameFor(model => model.Vehicle.WarrantyTerms)
+                </dt>
+                <dd class="col-sm-7 warrantyTermsDetails">
+                    @Html.DisplayFor(model => model.Vehicle.WarrantyTerms)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="text-center">
+            <a asp-controller="vehicle" asp-action="index"
+               class="btn btn-primary">Powrót do listy</a>
+        </div>
+    </div>
+</div>
+
+

@@ -1,4 +1,4 @@
-﻿
+﻿@model VehicleServiceBook.ViewModels.ProducerIndexViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -23,14 +23,74 @@
                 <th>Akcja</th>
             </tr>
         </thead>
+        <tbody>
+            @foreach (var item in Model.Producers)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                    <td>
+                        <div class="text-center">
+                            <a onclick="SubPagePopup('/Details?id=@item.Id')"
+                               class="btn btn-info text-white" style="cursor:pointer">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                            <a onclick="SubPagePopup('/Edit?id=@item.Id')" class="btn btn-success text-white" style="cursor:pointer">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a onclick="Delete('/Delete?id=@item.Id')" class="btn btn-danger text-white" style="cursor:pointer">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
-@section Scripts{
 
-    <script src="/js/producers.js"></script>
-}
+<script>
+    $(document).ready(function () {
+        $('#tblData').DataTable({
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/Polish.json"
+            },
+        });
+    });
 
+    var currentpath;
+    var fullurl;
+    var subpathCopy;
 
+    function Delete(subpath) {
+        subpathCopy = subpath
+        currentpath = window.location.pathname
+        fullurl = currentpath + subpathCopy
+        Swal.fire({
+            title: 'Czy jesteś pewien?',
+            text: "Nie będzie możliwości przywrócenia danych!",
+            icon: 'warning',
+            showCancelButton: true,
+            timer: 20000,
+            confirmButtonText: 'Tak, usuń',
+            cancelButtonText: 'Nie, wróć',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "DELETE",
+                    url: fullurl,
+                    success:
+                        function (){
+                            location.reload();
+                        }
+                });
+            }
+            else if (
+                result.dismiss === Swal.DismissReason.cancel
+            );
+        })
+    }
+</script>
 
 
 
