@@ -17,12 +17,14 @@ namespace VehicleServiceBook.Controllers
         private readonly IFaultService _faultService;
         private readonly IVehicleService _vehicleService;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IInternalServiceService _internalServiceService;
 
-        public FaultController(IVehicleService vehicleService, UserManager<IdentityUser> userManager, IFaultService faultService)
+        public FaultController(IVehicleService vehicleService, UserManager<IdentityUser> userManager, IFaultService faultService, IInternalServiceService internalServiceService)
         {
             _faultService = faultService;
             _vehicleService = vehicleService;
             _userManager = userManager;
+            _internalServiceService = internalServiceService;
         }
         [Authorize(Roles = "Admin, Obsługa")]
         public async Task<IActionResult> Index()
@@ -172,6 +174,7 @@ namespace VehicleServiceBook.Controllers
             {
                 try
                 {
+                    var internalServiceFault = new InternalServiceModel();
                     var faultProcessed = await _faultService.GetAsync(viewModel.FaultId);
                     faultProcessed.Description = viewModel.Description;
                     faultProcessed.VehicleId = viewModel.VehicleId;
@@ -182,9 +185,15 @@ namespace VehicleServiceBook.Controllers
                     faultProcessed.OperatorRemarks = viewModel.OperatorRemarks;
                     faultProcessed.ProcessedUserName = _userManager.GetUserName(User);
                     faultProcessed.ProcessDateTime = DateTime.Now;
+                    if (faultProcessed.Action == "IntService")
+                    {
+                        internalServiceFault.FaultId = faultProcessed.Id;
+                        //internalServiceFault.VehicleNumber = faultProcessed.Vehicle.Number;
+                        await _internalServiceService.CreateAsync(internalServiceFault);
+                    }
                     _faultService.Update(faultProcessed);
                     _vehicleService.Update(vehicleToChangeStatus);
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", new { id = internalServiceFault.Id });
                 }
                 catch
                 {

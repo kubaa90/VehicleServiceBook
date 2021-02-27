@@ -11,6 +11,11 @@ function SubPagePopup(subpath, widthSize) {
     currentpath = window.location.pathname;
     fullurl = currentpath + subpathCopy;
     console.log('fullurl: ', fullurl, ' widthSize: ', widthSize, ' widthLocal: ', widthLocal);
+    //$(document).ready(function () {
+    //    $('#warrantyCheckbox').change(function () {
+    //        $('#warrantyTerms').fadeToggle();
+    //    });
+    //});
     $.ajax({
         type: "get",
         url: fullurl,
@@ -32,6 +37,18 @@ function SubPagePopup(subpath, widthSize) {
                 showConfirmButton: false,
                 focusConfirm: false,
             });
-        }
+
+            if (!$('#warrantyCheckboxEdit input[type="checkbox"]').prop('checked')) {
+                $("#warrantyTermsEdit").fadeToggle(0)
+            }
+            $('#warrantyCheckboxEdit input[type="checkbox"]').click(function () {
+                $('#warrantyTermsEdit').fadeToggle();
+            });
+            $(".warrantyTermsDetails").hide();
+            let checkboxValue = $('#warrantyCheckboxDetails').text().trim();
+            if (checkboxValue == 'TAK') {
+                $(".warrantyTermsDetails").show();
+            }
+        },
     });
 }
